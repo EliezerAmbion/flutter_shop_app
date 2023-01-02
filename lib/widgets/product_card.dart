@@ -16,6 +16,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('test');
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
