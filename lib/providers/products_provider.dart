@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/product_model.dart';
+import 'product_model.dart';
 
 class ProductsProvider with ChangeNotifier {
   final List<Product> _items = [
@@ -45,6 +45,7 @@ class ProductsProvider with ChangeNotifier {
   void addProduct() {
     // _items.add(value);
     // to notify all the the pages that are listening to this class will get rebuild
+    // Remember: notifyListeners() is equivalent to setState.
     notifyListeners();
   }
 }
