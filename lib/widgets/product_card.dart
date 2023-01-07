@@ -25,6 +25,7 @@ class ProductCard extends StatelessWidget {
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           // Consumer<Product> is the alternative syntax to Provider.of<Product>
+          // You can user Consumer<> if you want to ONLY update a SPECIFIC part, NOT the entire app like the Provider.of.
           // You can use them simultaneously. Like in this example,
           // we have Provider.of<Product> above
           // we have Cosumer<Product> below.
