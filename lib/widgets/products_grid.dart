@@ -5,6 +5,13 @@ import '../providers/products_provider.dart';
 import 'product_card.dart';
 
 class ProductsGrid extends StatelessWidget {
+  final bool showFavorites;
+
+  const ProductsGrid({
+    super.key,
+    required this.showFavorites,
+  });
+
   @override
   Widget build(BuildContext context) {
     // notice that the type is ProductsProvider (<ProductsProvider>)
@@ -19,8 +26,9 @@ class ProductsGrid extends StatelessWidget {
     // i.e create: (context) => ProductsProvider(), see Main.dart file.
     final productsData = Provider.of<ProductsProvider>(context);
 
-    // the .items is a getter in ProductsProvider
-    final products = productsData.items;
+    // the .favoriteItems and .items are getter in ProductsProvider
+    final products =
+        showFavorites ? productsData.favoriteItems : productsData.items;
 
     return GridView.builder(
       padding: const EdgeInsets.all(10),

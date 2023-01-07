@@ -13,7 +13,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ChangeNotifierProvider allows us to register a class to which you can then listen in child widgets.
+    // And whenever that class updates the widgets which are listening (child widgets here) will rebuild.
     return ChangeNotifierProvider(
+      // The builder (create:) method will receive a context,
+      // and it will return a new instance of your provider class, in this case,
+      // the ProductsProvider class.
+      // NOTE: alternatively, you can user ChangeNotifierProvider.value if you don't need the context
+      // and change the create: to value:
+      // ex: value: ProductsProvider(). Notice that there is context and arrow function.
       create: (context) => ProductsProvider(),
       child: MaterialApp(
         title: 'MyShop',
