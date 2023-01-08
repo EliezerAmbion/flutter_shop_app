@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../screens/product_detail_screen.dart';
 import '../providers/product_model.dart';
+import '../providers/cart.dart';
 
 class ProductCard extends StatelessWidget {
   // final String id;
@@ -19,6 +20,8 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -29,6 +32,9 @@ class ProductCard extends StatelessWidget {
           // You can use them simultaneously. Like in this example,
           // we have Provider.of<Product> above
           // we have Cosumer<Product> below.
+
+          // NOTE: use Provier.of if you want to rebuild everything
+          // use Consumer if you want to rebuild a specific part
           leading: Consumer<Product>(
             builder: (BuildContext context, product, Widget? child) =>
                 IconButton(
@@ -45,7 +51,9 @@ class ProductCard extends StatelessWidget {
             icon: const Icon(
               Icons.shopping_cart,
             ),
-            onPressed: () {},
+            onPressed: () {
+              cart.addItem(product.id, product.price, product.title);
+            },
             color: Theme.of(context).colorScheme.secondary,
           ),
           title: Text(

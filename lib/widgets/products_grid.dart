@@ -18,8 +18,10 @@ class ProductsGrid extends StatelessWidget {
     // We're telling the provider package that we want to establish a
     // direct communication channel to the provided instance of the ProductsProvider class.
 
-    // Using Provider.of<ProductsProvider>, the provider package will BUBBLE UP the widget tree
-    // until it see a provider(ChangeNotifierProvider) which is in the MyApp widget(Main.dart)
+    // Using Provider.of<ProductsProvider>, this gives us access to the nearest provided object
+    // of type ProductsProvider which is in the MyApp widget(Main.dart) -> provider(ChangeNotifierProvider).
+    // The provider package will BUBBLE UP the widget tree
+    // until it see a provider(ChangeNotifierProvider)
 
     // NOTE: the <ProductsProvider> should be the same in the builder method
     // in the MyApp widget(Main.dart)

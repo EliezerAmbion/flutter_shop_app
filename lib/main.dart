@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 // you need to import this to use the provider
 import 'package:provider/provider.dart';
 
-import './screens/product_detail_screen.dart';
-import './screens/products_overview_screen.dart';
-import './providers/cart.dart';
+import 'screens/product_detail_screen.dart';
+import 'screens/products_overview_screen.dart';
+import 'screens/cart_screen.dart';
 
+import 'providers/cart.dart';
 import 'providers/products_provider.dart';
 
 void main() => runApp(const MyApp());
@@ -39,13 +40,20 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme:
               ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple).copyWith(
+            primary: Colors.deepPurple,
             secondary: Colors.deepOrange,
           ),
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
           fontFamily: 'Lato',
         ),
         home: ProductsOverviewScreen(),
         routes: {
           ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
+          CartScreen.routeName: (context) => CartScreen(),
         },
       ),
     );
