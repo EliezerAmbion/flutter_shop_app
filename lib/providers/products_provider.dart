@@ -51,6 +51,10 @@ class ProductsProvider with ChangeNotifier {
     return _items.where((item) => item.isFavorite).toList();
   }
 
+  findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
+  }
+
   // void showFavoritesOnly() {
   //   _isShowFavoritesOnly = true;
   //   notifyListeners();

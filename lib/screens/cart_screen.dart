@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 // show keyword is to let flutter know that you are only interested in Cart class inside this file
 import '../providers/cart.dart' show Cart;
+import '../providers/orders.dart';
+import '../widgets/app_drawer.dart';
 import '../widgets/cart_card.dart';
 
 class CartScreen extends StatelessWidget {
@@ -18,6 +20,7 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Your Cart,'),
       ),
+      drawer: const AppDrawer(),
       body: Column(
         children: [
           Card(
@@ -27,43 +30,51 @@ class CartScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Total',
                     style: TextStyle(fontSize: 20),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Chip(
                     label: Text(
-                      'P${cart.totalAmount}',
+                      'P${cart.totalAmount.toStringAsFixed(2)}',
                       style: TextStyle(
                           color: Theme.of(context).textTheme.headline6!.color),
                     ),
                     backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<Orders>(context, listen: false).addOrder(
+                        cart.items.values.toList(),
+                        cart.totalAmount,
+                      );
+                      cart.clear();
+                    },
                     style: TextButton.styleFrom(
                       foregroundColor: Theme.of(context).colorScheme.primary,
                     ),
                     child: const Text(
                       'Order Now!',
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Expanded(
-              child: ListView.builder(
-            itemBuilder: (context, i) => CartCard(
-              id: cart.items.values.toList()[i].id,
-              price: cart.items.values.toList()[i].price,
-              quantity: cart.items.values.toList()[i].quantity,
-              title: cart.items.values.toList()[i].title,
+            child: ListView.builder(
+              itemBuilder: (context, i) => CartCard(
+                id: cart.items.values.toList()[i].id,
+                productId: cart.items.keys.toList()[i],
+                price: cart.items.values.toList()[i].price,
+                quantity: cart.items.values.toList()[i].quantity,
+                title: cart.items.values.toList()[i].title,
+              ),
+              itemCount: cart.itemCount,
             ),
-            itemCount: cart.itemCount,
-          ))
+          )
         ],
       ),
     );
