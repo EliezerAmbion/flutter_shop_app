@@ -14,18 +14,6 @@ class ProductsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // notice that the type is ProductsProvider (<ProductsProvider>)
-    // We're telling the provider package that we want to establish a
-    // direct communication channel to the provided instance of the ProductsProvider class.
-
-    // Using Provider.of<ProductsProvider>, this gives us access to the nearest provided object
-    // of type ProductsProvider which is in the MyApp widget(Main.dart) -> provider(ChangeNotifierProvider).
-    // The provider package will BUBBLE UP the widget tree
-    // until it see a provider(ChangeNotifierProvider)
-
-    // NOTE: the <ProductsProvider> should be the same in the builder method
-    // in the MyApp widget(Main.dart)
-    // i.e create: (context) => ProductsProvider(), see Main.dart file.
     final productsData = Provider.of<ProductsProvider>(context);
 
     // the .favoriteItems and .items are getter in ProductsProvider
@@ -37,11 +25,7 @@ class ProductsGrid extends StatelessWidget {
       itemCount: products.length,
       itemBuilder: (context, i) => ChangeNotifierProvider.value(
         value: products[i],
-        child: ProductCard(
-            // id: products[i].id,
-            // title: products[i].title,
-            // imageUrl: products[i].imageUrl,
-            ),
+        child: ProductCard(),
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,

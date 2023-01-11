@@ -9,8 +9,6 @@ import '../widgets/app_drawer.dart';
 import '../widgets/badge.dart';
 import '../widgets/products_grid.dart';
 
-// enums are really just ways of assigning labels to integers, so that behind the scenes, we still have
-// integers but we as a developer can work with these labels
 enum FilterOptions {
   Favorites,
   All,

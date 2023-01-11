@@ -38,12 +38,7 @@ class ProductsProvider with ChangeNotifier {
     ),
   ];
 
-  // bool _isShowFavoritesOnly = false;
-
   List<Product> get items {
-    // if (_isShowFavoritesOnly) {
-    //   return _items.where((item) => item.isFavorite).toList();
-    // }
     return [..._items];
   }
 
@@ -55,20 +50,7 @@ class ProductsProvider with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  // void showFavoritesOnly() {
-  //   _isShowFavoritesOnly = true;
-  //   notifyListeners();
-  // }
-
-  // void showAll() {
-  //   _isShowFavoritesOnly = false;
-  //   notifyListeners();
-  // }
-
   void addProduct() {
-    // _items.add(value);
-    // to notify all the the pages that are listening to this class will get rebuild
-    // Remember: notifyListeners() is equivalent to setState.
     notifyListeners();
   }
 }

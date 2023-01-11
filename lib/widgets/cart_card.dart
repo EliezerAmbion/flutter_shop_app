@@ -42,6 +42,7 @@ class CartCard extends StatelessWidget {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
       },
       child: Card(
+        elevation: 5,
         margin: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
@@ -55,7 +56,7 @@ class CartCard extends StatelessWidget {
                   child: FittedBox(child: Text('P$price'))),
             ),
             title: Text(title),
-            subtitle: Text('Totle: P${(price * quantity)}'),
+            subtitle: Text('P${(price * quantity)}'),
             trailing: Text('$quantity x'),
           ),
         ),
