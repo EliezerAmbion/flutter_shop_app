@@ -44,7 +44,7 @@ class ProductCard extends StatelessWidget {
               Icons.shopping_cart,
             ),
             onPressed: () {
-              cart.addItem(product.id, product.price, product.title);
+              cart.addItem(product.id!, product.price, product.title);
               // hideCurrentSnackBar cancels the showSnackBar when you press it multiple times
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
@@ -54,7 +54,7 @@ class ProductCard extends StatelessWidget {
                   action: SnackBarAction(
                       label: 'UNDO',
                       onPressed: () {
-                        cart.removeSingleItem(product.id);
+                        cart.removeSingleItem(product.id!);
                       }),
                 ),
               );
