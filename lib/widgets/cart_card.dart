@@ -23,6 +23,27 @@ class CartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey(id),
+      confirmDismiss: (direction) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Are you sure?'),
+          content: Text('Do you want to remove $title item from the cart?'),
+          actions: [
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        ),
+      ),
       background: Container(
         color: Theme.of(context).errorColor,
         alignment: Alignment.centerRight,
