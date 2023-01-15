@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert'; // to use json.encode
 
 import 'product_model.dart';
 
@@ -50,16 +52,36 @@ class ProductsProvider with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct(Product product) {
-    final newProd = Product(
-      id: DateTime.now().toString(),
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      imageUrl: product.imageUrl,
-    );
-    _items.add(newProd);
-    notifyListeners();
+  Future<void> addProduct(Product product) async {
+    final url = Uri.parse(
+        'https://flutter-expense-tracker-e2c43-default-rtdb.firebaseio.com/products.json');
+
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'imageUrl': product.imageUrl,
+          'price': product.price,
+          'isFavorite': product.isFavorite,
+        }),
+      );
+
+      final newProd = Product(
+        id: json.decode(response.body)['name'],
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+      );
+
+      _items.add(newProd);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 
   void updateProduct(String id, Product newProduct) {
