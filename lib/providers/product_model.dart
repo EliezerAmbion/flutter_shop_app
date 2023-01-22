@@ -1,4 +1,7 @@
+import 'dart:convert'; // you need this to use json.encode
+
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 
 class Product with ChangeNotifier {
   final String? id;
@@ -17,9 +20,32 @@ class Product with ChangeNotifier {
     this.isFavorite = false,
   });
 
-  void toggleFavoriteStatus() {
-    isFavorite = !isFavorite;
-
+  void _setFavoriteValue(bool newValue) {
+    isFavorite = newValue;
     notifyListeners();
+  }
+
+  Future<void> toggleFavoriteStatus() async {
+    final oldStatus = isFavorite;
+    isFavorite = !isFavorite;
+    notifyListeners();
+
+    final url = Uri.parse(
+        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products/$id.json');
+
+    try {
+      final response = await http.patch(
+        url,
+        // you need to import dart:convert to use json.encode
+        body: json.encode({
+          'isFavorite': isFavorite,
+        }),
+      );
+      if (response.statusCode >= 400) {
+        _setFavoriteValue(oldStatus);
+      }
+    } catch (error) {
+      _setFavoriteValue(oldStatus);
+    }
   }
 }

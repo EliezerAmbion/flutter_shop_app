@@ -34,8 +34,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'MyShop',
         theme: ThemeData(
-          colorScheme:
-              ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple).copyWith(
+          colorScheme: ColorScheme.fromSwatch().copyWith(
             primary: Colors.deepPurple,
             secondary: Colors.deepOrange,
           ),
@@ -45,6 +44,13 @@ class MyApp extends StatelessWidget {
                 ),
               ),
           fontFamily: 'Lato',
+          appBarTheme: const AppBarTheme(
+            // color: Colors.deepPurple,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.black,
+            centerTitle: true,
+          ),
         ),
         home: ProductsOverviewScreen(),
         routes: {

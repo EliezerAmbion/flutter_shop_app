@@ -135,7 +135,7 @@ class ProductsProvider with ChangeNotifier {
   //  Sample of an optimistic updating
   Future<void> deleteProduct(String id) async {
     final url = Uri.parse(
-        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products/$id');
+        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products/$id.json');
     final existingProdIndex = _items.indexWhere((prod) => prod.id == id);
     Product? existingProduct = _items[existingProdIndex];
 
