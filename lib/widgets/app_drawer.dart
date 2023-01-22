@@ -6,41 +6,56 @@ import '../screens/user_products_screen.dart';
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
+  Widget _buildListTile(
+      BuildContext context, IconData icon, String title, String route) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      onTap: () {
+        Navigator.of(context).pushReplacementNamed(route);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
           AppBar(
-            title: const Text('Hello, Friend!'),
+            title: Text(
+              'Hello, Friend!',
+              style: TextStyle(
+                fontSize: 30,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
             automaticallyImplyLeading: false,
+            centerTitle: false,
+            toolbarHeight: 50,
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.shop),
-            title: const Text('Shop'),
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed('/');
-            },
+          _buildListTile(
+            context,
+            Icons.shop,
+            'Shop',
+            '/',
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.payment),
-            title: const Text('Orders'),
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(OrdersScreen.routeName);
-            },
+          _buildListTile(
+            context,
+            Icons.payment,
+            'Orders',
+            OrdersScreen.routeName,
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text('Manage Products'),
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(UserProductsScreen.routeName);
-            },
+          _buildListTile(
+            context,
+            Icons.edit,
+            'Manage Products',
+            UserProductsScreen.routeName,
           ),
+          const Divider(),
         ],
       ),
     );
