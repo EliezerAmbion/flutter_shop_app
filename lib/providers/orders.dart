@@ -32,15 +32,15 @@ class Orders with ChangeNotifier {
     final response = await http.get(url);
     final List<OrderItem> loadedOrders = [];
 
-    final extracedData = json.decode(response.body) as Map<String, dynamic>?;
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
-    if (extracedData == null) {
+    if (extractedData.isEmpty || extractedData['error'] != null) {
       _orders = [];
       notifyListeners();
       return;
     }
 
-    extracedData.forEach((orderId, orderData) {
+    extractedData.forEach((orderId, orderData) {
       loadedOrders.add(
         OrderItem(
           id: orderId,
