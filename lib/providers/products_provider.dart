@@ -59,7 +59,7 @@ class ProductsProvider with ChangeNotifier {
 
     try {
       final response = await http.get(url);
-      final extractedData = json.decode(response.body) as Map<dynamic, dynamic>;
+      final extractedData = json.decode(response.body) as Map<String, dynamic>?;
 
       if (extractedData == null) {
         return;

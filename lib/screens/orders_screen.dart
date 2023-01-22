@@ -17,11 +17,11 @@ class OrdersScreen extends StatelessWidget {
         drawer: const AppDrawer(),
         body: FutureBuilder(
             future: Provider.of<Orders>(context, listen: false).getOrders(),
-            builder: (context, dataSanpShot) {
-              if (dataSanpShot.connectionState == ConnectionState.waiting) {
+            builder: (context, dataSnapShot) {
+              if (dataSnapShot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               }
-              if (dataSanpShot.error != null) {
+              if (dataSnapShot.error != null) {
                 return const Center(
                   child: Text('An error occured'),
                 );
