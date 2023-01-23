@@ -6,6 +6,10 @@ import 'product_model.dart';
 import '../models/http_exception.dart';
 
 class ProductsProvider with ChangeNotifier {
+  final String? authToken;
+
+  ProductsProvider(this.authToken, this._items);
+
   List<Product> _items = [
     // Product(
     //   id: 'p1',
@@ -55,7 +59,7 @@ class ProductsProvider with ChangeNotifier {
 
   Future<void> getProducts() async {
     final url = Uri.parse(
-        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products.json');
+        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products.json?auth=$authToken');
 
     try {
       final response = await http.get(url);
@@ -86,7 +90,7 @@ class ProductsProvider with ChangeNotifier {
 
   Future<void> addProduct(Product product) async {
     final url = Uri.parse(
-        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products.json');
+        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products.json?auth=$authToken');
 
     try {
       final response = await http.post(
@@ -120,7 +124,7 @@ class ProductsProvider with ChangeNotifier {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       final url = Uri.parse(
-          'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products/$id.json');
+          'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken');
 
       await http.patch(url,
           body: json.encode({
@@ -140,7 +144,7 @@ class ProductsProvider with ChangeNotifier {
   //  Sample of an optimistic updating
   Future<void> deleteProduct(String id) async {
     final url = Uri.parse(
-        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products/$id.json');
+        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken');
     final existingProdIndex = _items.indexWhere((prod) => prod.id == id);
     Product? existingProduct = _items[existingProdIndex];
 
