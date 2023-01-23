@@ -25,12 +25,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   bool _isInit = true;
   bool _isLoading = false;
 
-  // @override
-  // void initState() {
-  //   Provider.of<ProductsProvider>(context).getProducts();
-  //   super.initState();
-  // }
-
   @override
   void didChangeDependencies() {
     if (_isInit) {

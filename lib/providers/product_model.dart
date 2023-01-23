@@ -25,21 +25,20 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFavoriteStatus(String authToken) async {
+  Future<void> toggleFavoriteStatus(String authToken, String userId) async {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
 
     final url = Uri.parse(
-        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken');
+        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken');
 
     try {
-      final response = await http.patch(
+      final response = await http.put(
         url,
-        // you need to import dart:convert to use json.encode
-        body: json.encode({
-          'isFavorite': isFavorite,
-        }),
+        body: json.encode(
+          isFavorite,
+        ),
       );
       if (response.statusCode >= 400) {
         _setFavoriteValue(oldStatus);

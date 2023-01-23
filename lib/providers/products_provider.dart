@@ -6,9 +6,14 @@ import 'product_model.dart';
 import '../models/http_exception.dart';
 
 class ProductsProvider with ChangeNotifier {
-  final String? authToken;
+  late String? authToken;
+  late String? userId;
 
-  ProductsProvider(this.authToken, this._items);
+  ProductsProvider(
+    this.authToken,
+    this.userId,
+    this._items,
+  );
 
   List<Product> _items = [
     // Product(
@@ -57,9 +62,12 @@ class ProductsProvider with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  Future<void> getProducts() async {
-    final url = Uri.parse(
-        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products.json?auth=$authToken');
+  Future<void> getProducts([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+
+    var url = Uri.parse(
+        'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterString');
 
     try {
       final response = await http.get(url);
@@ -69,6 +77,11 @@ class ProductsProvider with ChangeNotifier {
         return;
       }
 
+      url = Uri.parse(
+          'https://flutter-shop-app-fc3a0-default-rtdb.firebaseio.com/userFavorites/$userId.json?auth=$authToken');
+      final favoriteResponse = await http.get(url);
+      final favoriteData = json.decode(favoriteResponse.body);
+
       final List<Product> loadedProducts = [];
 
       extractedData.forEach((prodId, prodData) {
@@ -77,7 +90,8 @@ class ProductsProvider with ChangeNotifier {
           title: prodData['title'],
           description: prodData['description'],
           price: prodData['price'],
-          isFavorite: prodData['isFavorite'],
+          isFavorite:
+              favoriteData == null ? false : favoriteData[prodId] ?? false,
           imageUrl: prodData['imageUrl'],
         ));
       });
@@ -100,7 +114,7 @@ class ProductsProvider with ChangeNotifier {
           'description': product.description,
           'imageUrl': product.imageUrl,
           'price': product.price,
-          'isFavorite': product.isFavorite,
+          'creatorId': userId,
         }),
       );
 
